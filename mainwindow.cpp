@@ -8,6 +8,8 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include <QTextCodec>
+#include <QMouseEvent>
+#include <QListWidgetItem>
 
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
@@ -23,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(player, &QMediaPlayer::positionChanged, this, &::MainWindow::on_time_lineChanged);
     connect(player, &QMediaPlayer::durationChanged, this, &::MainWindow::on_volume_valueChanged);
     connect(player, &QMediaPlayer::positionChanged, this, &::MainWindow::next_track);
+    connect(ui->del_button, &QPushButton::clicked, this, &::MainWindow::delete_track);
 
     player->setAudioOutput(output);
 
@@ -45,12 +48,11 @@ void MainWindow::draw_tracks(){
 
 
 void MainWindow::set_track(std::string name){
-    //std::wstring wstr = L"";
-    //for(auto a:name)wstr.push_back(a);
+
     player->setSource(QUrl::fromLocalFile(QTextCodec::codecForName("Windows-1251")->fromUnicode(QString::fromStdString(name))));
     ui->time_line->setMaximum(player->duration());
     ui->track_name->setText("playing: "+QString::fromStdString(name));
-    qDebug()<<player->errorString()<<"\n";
+    ui->statusbar->setAccessibleName(player->errorString());
 }
 
 
@@ -84,7 +86,7 @@ void MainWindow::on_time_lineChanged(int value)
 
 void MainWindow::on_volume_sliderMoved(int position)
 {
-    float pos = float(position)/100;
+    float pos = float(position)/100.f;
     output->setVolume(pos);
 }
 
@@ -124,6 +126,8 @@ void MainWindow::on_stop_button_clicked()
 
 void MainWindow::on_prev_button_clicked()
 {
+    if(tracks.size() == 0)
+        return;
     std::string source =player->source().toString().toStdString();source.replace(0,8, "");
     unsigned idx = logic::index(tracks, source);
     if (idx == 0)
@@ -136,6 +140,8 @@ void MainWindow::on_prev_button_clicked()
 
 void MainWindow::on_next_button_clicked()
 {
+    if(tracks.size() == 0)
+        return;
     std::string source =player->source().toString().toStdString();source.replace(0,8, "");
     unsigned idx = logic::index(tracks, source);
     if (idx == tracks.size()-1)
@@ -143,5 +149,15 @@ void MainWindow::on_next_button_clicked()
     else
         set_track(tracks[idx+1]);
     player->play();
+}
+
+
+void MainWindow::delete_track(){
+    std::string source = player->source().toString().toStdString();source.replace(0,8, "");
+    unsigned idx = logic::index(tracks, source);
+    tracks.erase(tracks.begin()+idx);
+    dat::renew_tracks(tracks);
+    draw_tracks();
+    set_track("");
 }
 

@@ -12,6 +12,7 @@ std::vector<std::string> get_tracks();
 
 void add_track(std::string&name);
 
+void renew_tracks(std::vector<std::string> vec);
 }
 
 namespace logic {

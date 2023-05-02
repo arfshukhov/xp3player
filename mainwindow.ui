@@ -34,13 +34,24 @@ background-color:rgb(231, 229, 255);
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"> QPushButton {
-     border: 2px solid gray;
-     border-radius: 10px;
-     padding: 0 8px;
-     background-color: rgb(201, 199, 255);
-	font: bold 14px;
- }</string>
+     <string notr="true">QPushButton {
+    background-color: rgb(201, 199, 255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+    font: bold 14px;
+    padding: 6px;
+}
+QPushButton::pressed{
+    background-color: rgb(149, 130, 255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+    font: bold 14px;
+    padding: 6px;
+}</string>
     </property>
     <property name="text">
      <string>Add new track</string>
@@ -214,7 +225,7 @@ QListView::item:hover {
      <number>1</number>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -229,6 +240,15 @@ QListView::item:hover {
        <property name="styleSheet">
         <string notr="true">QPushButton {
     background-color: rgb(201, 199, 255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+    font: bold 14px;
+    padding: 6px;
+}
+QPushButton::pressed{
+    background-color: rgb(149, 130, 255);
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
@@ -254,6 +274,15 @@ QListView::item:hover {
     border-color: grey;
     font: bold 14px;
     padding: 6px;
+}
+QPushButton::pressed{
+    background-color: rgb(149, 130, 255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+    font: bold 14px;
+    padding: 6px;
 }</string>
        </property>
        <property name="text">
@@ -269,7 +298,16 @@ QListView::item:hover {
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
-   border-color: grey;
+    border-color: grey;
+    font: bold 14px;
+    padding: 6px;
+}
+QPushButton::pressed{
+    background-color: rgb(149, 130, 255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
     font: bold 14px;
     padding: 6px;
 }</string>
@@ -291,7 +329,15 @@ QListView::item:hover {
     font: bold 14px;
     padding: 6px;
 }
-</string>
+QPushButton::pressed{
+    background-color: rgb(149, 130, 255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+    font: bold 14px;
+    padding: 6px;
+}</string>
        </property>
        <property name="text">
         <string>stop</string>
@@ -299,6 +345,39 @@ QListView::item:hover {
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="del_button">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>510</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: rgb(201, 199, 255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+    font: bold 14px;
+    padding: 6px;
+}
+QPushButton::pressed{
+    background-color: rgb(149, 130, 255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+    font: bold 14px;
+    padding: 6px;
+}</string>
+    </property>
+    <property name="text">
+     <string>delete current track</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

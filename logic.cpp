@@ -40,6 +40,15 @@ void add_track(std::string& name){
     fout << name<<std::endl;
     fout.close();
 }
+
+void renew_tracks(std::vector<std::string> vec){
+    auto path = dat::get_current_dir();
+    std::ofstream fout(path+"\\data.txt");
+    for(auto elem: vec){
+        fout<<elem+"\n";
+    }
+    fout.close();
+}
 }
 
 
@@ -56,7 +65,3 @@ int index(std::vector<std::string>& vec, std::string t){
     return -1;
 }
 }
-
-/*std::string filter_path(std::string str){
-    }
-}*/

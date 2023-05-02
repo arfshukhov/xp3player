@@ -30,6 +30,8 @@ public:
 
     void set_track(std::string);
 
+    void delete_track();
+
 private slots:
     void on_add_button_clicked();
 
@@ -52,6 +54,7 @@ private slots:
     void on_prev_button_clicked();
 
     void on_next_button_clicked();
+
 
 private:
     Ui::MainWindow *ui;
