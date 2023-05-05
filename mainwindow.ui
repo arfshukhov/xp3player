@@ -10,8 +10,33 @@
     <height>606</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>606</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>606</height>
+   </size>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>XP3Player</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>C:/Users/PC/Downloads/Без имени-1.png</normaloff>C:/Users/PC/Downloads/Без имени-1.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{
@@ -231,7 +256,7 @@ QListView::item:hover {
       <x>260</x>
       <y>510</y>
       <width>248</width>
-      <height>37</height>
+      <height>51</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -263,7 +288,7 @@ QPushButton::pressed{
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
+     <item row="0" column="1">
       <widget class="QPushButton" name="prev_button">
        <property name="styleSheet">
         <string notr="true">QPushButton {
@@ -287,33 +312,6 @@ QPushButton::pressed{
        </property>
        <property name="text">
         <string>prev</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="play_button">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-    background-color: rgb(201, 199, 255);
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: grey;
-    font: bold 14px;
-    padding: 6px;
-}
-QPushButton::pressed{
-    background-color: rgb(149, 130, 255);
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: grey;
-    font: bold 14px;
-    padding: 6px;
-}</string>
-       </property>
-       <property name="text">
-        <string>play</string>
        </property>
       </widget>
      </item>
@@ -341,6 +339,33 @@ QPushButton::pressed{
        </property>
        <property name="text">
         <string>stop</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="play_button">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgb(201, 199, 255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+    font: bold 14px;
+    padding: 6px;
+}
+QPushButton::pressed{
+    background-color: rgb(149, 130, 255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+    font: bold 14px;
+    padding: 6px;
+}</string>
+       </property>
+       <property name="text">
+        <string>play</string>
        </property>
       </widget>
      </item>
@@ -377,6 +402,19 @@ QPushButton::pressed{
     </property>
     <property name="text">
      <string>delete current track</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>430</y>
+      <width>16</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
     </property>
    </widget>
   </widget>
