@@ -31,17 +31,26 @@
   <property name="contextMenuPolicy">
    <enum>Qt::NoContextMenu</enum>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>XP3Player</string>
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>C:/Users/PC/Downloads/Без имени-1.png</normaloff>C:/Users/PC/Downloads/Без имени-1.png</iconset>
+    <normaloff>icon.png</normaloff>icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{
 color:
 }</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>30</width>
+    <height>30</height>
+   </size>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">

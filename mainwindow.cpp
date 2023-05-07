@@ -35,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete player;
+    delete output;
 }
 
 void MainWindow::draw_tracks(){
