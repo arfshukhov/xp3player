@@ -8,6 +8,7 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include <QTextCodec>
+#include <QSystemTrayIcon>
 
 
 QT_BEGIN_NAMESPACE
@@ -25,6 +26,7 @@ public:
     std::vector<std::string> tracks = {};
     QMediaPlayer *player;
     QAudioOutput *output;
+    QSystemTrayIcon * tray_icon;
 
     void draw_tracks();
 
@@ -32,18 +34,20 @@ public:
 
     void delete_track();
 
+    void set_qr();
+
+    void set_tray();
+
+    void closeEvent(QCloseEvent * event);
+
 private slots:
     void on_add_button_clicked();
 
     void on_track_list_itemDoubleClicked(QListWidgetItem *item);
 
-    void on_volume_valueChanged(int value);
+    void on_volume_value_changed(int value);
 
-    void on_time_lineChanged(int value);
-
-    void on_volume_sliderMoved(int position);
-
-    void on_time_line_sliderMoved(int position);
+    void on_time_line_changed(int value);
 
     void next_track(int position);
 
@@ -55,7 +59,13 @@ private slots:
 
     void on_next_button_clicked();
 
+    void on_search_button_clicked();
 
+    void on_time_line_sliderMoved(int position);
+
+    void on_volume_sliderMoved(int position);
+
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
 private:
     Ui::MainWindow *ui;
 };

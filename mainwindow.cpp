@@ -10,7 +10,10 @@
 #include <QTextCodec>
 #include <QMouseEvent>
 #include <QListWidgetItem>
-
+#include <QDesktopServices>
+#include <QMediaMetaData>
+#include <QCloseEvent>
+#include <QAction>
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -22,15 +25,22 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
     output = new QAudioOutput;
 
-    connect(player, &QMediaPlayer::positionChanged, this, &::MainWindow::on_time_lineChanged);
-    connect(player, &QMediaPlayer::durationChanged, this, &::MainWindow::on_volume_valueChanged);
+    tray_icon = new QSystemTrayIcon(this);
+    set_tray();
+    connect(player, &QMediaPlayer::positionChanged, this, &::MainWindow::on_time_line_changed);
+    connect(player, &QMediaPlayer::durationChanged, this, &::MainWindow::on_volume_value_changed);
     connect(player, &QMediaPlayer::positionChanged, this, &::MainWindow::next_track);
     connect(ui->del_button, &QPushButton::clicked, this, &::MainWindow::delete_track);
+
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
     player->setAudioOutput(output);
 
     draw_tracks();
+
+    set_qr();
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -49,12 +59,35 @@ void MainWindow::draw_tracks(){
 }
 
 
+void MainWindow::set_qr(){
+    QSize PicSize(131, 131);
+
+    QPixmap pix1("pay_qr.png");
+    QPixmap pix2("card_qr.png");
+
+    pix1 = pix1.scaled(PicSize, Qt::KeepAspectRatio);
+    pix2 = pix2.scaled(PicSize, Qt::KeepAspectRatio);
+
+    ui->qr_label1->setPixmap(pix1);
+    ui->qr_label1->repaint();
+    ui->qr_label1->show();
+
+
+    ui->qr_label2->setPixmap(pix2);
+    ui->qr_label2->repaint();
+    ui->qr_label2->show();
+}
+
+
 void MainWindow::set_track(std::string name){
 
     player->setSource(QUrl::fromLocalFile(QTextCodec::codecForName("Windows-1251")->fromUnicode(QString::fromStdString(name))));
     ui->time_line->setMaximum(player->duration());
     ui->track_name->setText("playing: "+QString::fromStdString(name));
-    ui->statusbar->setAccessibleName(player->errorString());
+    ui->author_line->setText("author: "+player->metaData().stringValue(player->metaData().AlbumArtist));
+    //qDebug()<<player->metaData().stringValue(player->metaData().Author)<<"author"<<"\n";
+    ui->title_line->setText("title: "+player->metaData().stringValue(player->metaData().Title));
+    //qDebug()<<player->metaData().stringValue(player->metaData().Title)<<"title"<<"\n";
 }
 
 
@@ -68,34 +101,38 @@ void MainWindow::on_add_button_clicked()
 }
 
 
+void MainWindow::set_tray(){
+    tray_icon->setIcon(QIcon("icon.ico"));
+    tray_icon->setToolTip(QString("XP3 Player"));
+    QMenu * menu = new QMenu(this);
+    QAction * viewWindow = new QAction("Show player", this);
+    QAction * quitAction = new QAction("Close player", this);
+    connect(viewWindow, SIGNAL(triggered()), this, SLOT(show()));
+    connect(quitAction, &QAction::triggered, this, exit);
+    menu->addAction(viewWindow);
+    menu->addAction(quitAction);
+    tray_icon->setContextMenu(menu);
+    tray_icon->show();
+    connect(tray_icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+}
+
+
 void MainWindow::on_track_list_itemDoubleClicked(QListWidgetItem *item)
 {
     set_track(item->text().toStdString());
 }
 
 
-void MainWindow::on_volume_valueChanged(int value)
+void MainWindow::on_volume_value_changed(int value)
 {
     ui->volume->setValue(value);
 }
 
 
-void MainWindow::on_time_lineChanged(int value)
+void MainWindow::on_time_line_changed(int value)
 {
     ui->time_line->setValue(value);
-}
-
-
-void MainWindow::on_volume_sliderMoved(int position)
-{
-    float pos = float(position)/100.f;
-    output->setVolume(pos);
-}
-
-
-void MainWindow::on_time_line_sliderMoved(int position)
-{
-    player->setPosition(position);
 }
 
 
@@ -162,4 +199,50 @@ void MainWindow::delete_track(){
     draw_tracks();
     set_track("");
 }
+
+
+void MainWindow::on_search_button_clicked()
+{
+    QString link = "https://ru.hitmotop.com";
+    QDesktopServices::openUrl(QUrl(link));
+}
+
+
+void MainWindow::on_time_line_sliderMoved(int position)
+{
+    player->setPosition(position);
+}
+
+
+void MainWindow::on_volume_sliderMoved(int position)
+{
+    float pos = float(position)/100.f;
+    output->setVolume(pos);
+}
+
+
+void MainWindow::closeEvent(QCloseEvent * event)
+{
+    event->ignore();
+    this->hide();
+    tray_icon->showMessage(tr("XP3 Player"), tr("Player is hidden in tray"));
+}
+
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason){
+    case QSystemTrayIcon::Trigger:
+            if(!this->isVisible()){
+                this->show();
+            } else {
+                this->hide();
+            }
+            break;
+
+        break;
+    default:
+        break;
+    }
+}
+
 
