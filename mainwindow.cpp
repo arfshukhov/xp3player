@@ -81,13 +81,13 @@ void MainWindow::set_qr(){
 
 void MainWindow::set_track(std::string name){
 
-    player->setSource(QUrl::fromLocalFile(QTextCodec::codecForName("Windows-1251")->fromUnicode(QString::fromStdString(name))));
+    player->setSource(QUrl::fromLocalFile(QString::fromStdString(name)));
     ui->time_line->setMaximum(player->duration());
     ui->track_name->setText("playing: "+QString::fromStdString(name));
     ui->author_line->setText("author: "+player->metaData().stringValue(player->metaData().AlbumArtist));
-    //qDebug()<<player->metaData().stringValue(player->metaData().Author)<<"author"<<"\n";
     ui->title_line->setText("title: "+player->metaData().stringValue(player->metaData().Title));
-    //qDebug()<<player->metaData().stringValue(player->metaData().Title)<<"title"<<"\n";
+    //qDebug()<<name<<"\n";
+    //std::cout<<"name:"<<name<<"\n";
 }
 
 
