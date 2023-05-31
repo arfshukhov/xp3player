@@ -1,5 +1,7 @@
 # xp3player
 Это легковесный проигрыватель музыки
+
+[![Download XP3 Player](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/xp3player/files/latest/download)
 ![image](https://github.com/arfshukhov/xp3player/assets/81926456/6c85e1ba-d85d-4d26-b43d-ab3c5dd19cad)
 
 В плеере реализовано автовоспроизведение, зацикливание плейлиста.
