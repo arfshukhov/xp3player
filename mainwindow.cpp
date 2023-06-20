@@ -19,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 {
     ui->setupUi(this);
 
+    on_repeat = false;
+
     tracks = dat::get_tracks();
 
     player = new QMediaPlayer;
@@ -139,14 +141,22 @@ void MainWindow::on_time_line_changed(int value)
 void MainWindow::next_track(int position){
     if(position==(int)player->duration()){
         std::string source =player->source().toString().toStdString();source.replace(0,8, "");
-
         unsigned idx = logic::index(tracks, source);
-        if (idx == tracks.size()-1)
+        if (on_repeat == 1){
+            set_track(tracks[idx]);
+            player->stop();
+            player->play();
+        }
+        else if (idx == tracks.size()-1){
             set_track(tracks[0]);
-        else
+            player->stop();
+            player->play();
+        }
+        else{
             set_track(tracks[idx+1]);
-        player->stop();
-        player->play();
+            player->stop();
+            player->play();
+        }
     }
 }
 
@@ -245,4 +255,19 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
+
+
+
+
+void MainWindow::on_on_repeat_button_clicked()
+{
+    if(on_repeat){
+            on_repeat = false;
+            ui->on_repeat_button->setText("non repeat");
+    }
+    else{
+            on_repeat = true;
+            ui->on_repeat_button->setText("on repeat");
+    }
+}
 

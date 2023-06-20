@@ -27,6 +27,7 @@ public:
     QMediaPlayer *player;
     QAudioOutput *output;
     QSystemTrayIcon * tray_icon;
+    bool on_repeat;
 
     void draw_tracks();
 
@@ -66,6 +67,9 @@ private slots:
     void on_volume_sliderMoved(int position);
 
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
+    void on_on_repeat_button_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
